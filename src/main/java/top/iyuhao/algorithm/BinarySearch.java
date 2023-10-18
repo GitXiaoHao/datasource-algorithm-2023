@@ -21,6 +21,7 @@ public class BinarySearch {
         //定义右索引
         int right = arr.length - 1;
         //循环查找 如果左索引小于等于右索引则一直循环查找
+
         while (left <= right) {
             //定义中间值
             // /2 可能溢出
@@ -115,6 +116,7 @@ public class BinarySearch {
             System.arraycopy(arr, insertIndex, arrTemp, insertIndex + 1, arr.length - insertIndex);
             return arrTemp;
         }
+
         return arr;
     }
 
