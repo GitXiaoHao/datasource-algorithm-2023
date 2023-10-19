@@ -3,6 +3,7 @@ package top.iyuhao.algorithm;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -45,18 +46,12 @@ public class DynamicArray<T> implements Iterable<T>, Serializable {
     }
 
     public void add(int index, int element) {
+        Objects.checkIndex(index,size);
         //判断容量是否充足
         grow();
         //懒汉式
         if (index == 0) {
             arrayData = new Object[capacity];
-        }
-        //判断index的值
-        if (index < 0) {
-            return;
-        }
-        if (index > size) {
-            index = size;
         }
         //copy
         if (index != size) {

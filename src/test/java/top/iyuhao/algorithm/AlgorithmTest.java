@@ -3,9 +3,11 @@ package top.iyuhao.algorithm;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import top.iyuhao.Utils;
 
-import javax.sound.midi.Soundbank;
+import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -62,11 +64,53 @@ public class AlgorithmTest {
         System.out.println();
         array.stream().forEach(System.out::println);
     }
+
     @Test
     public void dynamicArrayTest02() {
         DynamicArray<Integer> array = new DynamicArray<>(1);
         array.add(1);
         array.add(22);
         array.forEach(System.out::println);
+    }
+
+
+    @Test
+    public void singleLinkedListTest01() {
+        SingleLinkedList<Integer> list = new SingleLinkedList<>();
+        list.addFirst(1);
+        list.addFirst(2);
+        list.addFirst(3);
+        list.addFirst(4);
+        list.loop(System.out::println);
+        for (Integer integer : list) {
+            System.out.println(integer);
+        }
+    }
+
+    @Test
+    public void singleLinkedListTest02() {
+        SingleLinkedList<Integer> list = new SingleLinkedList<>();
+        list.addLast(1);
+        list.addLast(2);
+        list.addLast(3);
+        list.addLast(4);
+        Assertions.assertIterableEquals(List.of(1, 2, 3, 4), list);
+        Assert.assertEquals(Optional.of(1).get(), list.get(0));
+        Assert.assertEquals(Optional.of(2).get(), list.get(1));
+        Assert.assertEquals(Optional.of(3).get(), list.get(2));
+        Assert.assertEquals(Optional.of(4).get(), list.get(3));
+        list.get(11);
+    }
+
+    @Test
+    public void singleLinkedListTest03() {
+        SingleLinkedList<Integer> list = new SingleLinkedList<>();
+        list.insert(0, 1);
+        list.insert(1, 2);
+        list.insert(2, 3);
+        list.insert(3, 4);
+        list.insert(2, 5);
+        Assertions.assertIterableEquals(List.of(1, 2, 5, 3, 4), list);
+
     }
 }
