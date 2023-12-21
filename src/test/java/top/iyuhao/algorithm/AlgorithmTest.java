@@ -4,8 +4,12 @@ package top.iyuhao.algorithm;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import top.iyuhao.Utils;
+import top.iyuhao.algorithm.factorial.Factorial;
+import top.iyuhao.algorithm.factorial.FactorialBubbleSort;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +21,7 @@ import java.util.Optional;
 public class AlgorithmTest {
     @Test
     public void binarySearchBasicTest() {
-        int[] arr = {1, 5, 6, 8, 9, 12, 15, 18, 21, 25, 64, 3465};
+        int[] arr = { 1, 5, 6, 8, 9, 12, 15, 18, 21, 25, 64, 3465 };
         Assert.assertEquals(0, BinarySearch.binarySearchBasic(arr, 1));
         Assert.assertEquals(1, BinarySearch.binarySearchBasic(arr, 5));
         Assert.assertEquals(2, BinarySearch.binarySearchBasic(arr, 6));
@@ -111,6 +115,85 @@ public class AlgorithmTest {
         list.insert(3, 4);
         list.insert(2, 5);
         Assertions.assertIterableEquals(List.of(1, 2, 5, 3, 4), list);
+    }
 
+    @Test
+    @DisplayName("测试")
+    public void singleLinkedListTest04() {
+        SingleLinkedList<Integer> list = new SingleLinkedList<>();
+        list.insert(0, 1);
+        list.insert(1, 2);
+        list.insert(2, 3);
+        list.insert(3, 4);
+        list.insert(2, 5);
+        list.remove(2);
+        Assertions.assertIterableEquals(List.of(1, 2, 3, 4), list);
+        list.remove(0);
+        Assertions.assertIterableEquals(List.of(2, 3, 4), list);
+        list.remove(2);
+        Assertions.assertIterableEquals(List.of(2, 3), list);
+    }
+
+    @Test
+    public void doubleLinkedListSentinelTest01() {
+        DoubleLinkedListSentinel integers = new DoubleLinkedListSentinel();
+        integers.insert(0, 1);
+        integers.insert(1, 2);
+        integers.insert(2, 3);
+        integers.insert(3, 4);
+        integers.insert(2, 5);
+        Assertions.assertIterableEquals(List.of(1, 2, 5, 3, 4), integers);
+    }
+
+    @Test
+    public void doubleLinkedListSentinelTest02() {
+        DoubleLinkedListSentinel integers = new DoubleLinkedListSentinel();
+        integers.insert(0, 1);
+        integers.addLast(2);
+        integers.addLast(3);
+        integers.addLast(4);
+        integers.addLast(5);
+        integers.addFirst(0);
+        integers.removeLast();
+        integers.removeFirst();
+        integers.remove(2);
+        //  1 2  4
+        Assertions.assertIterableEquals(List.of(1, 2, 4), integers);
+    }
+
+    @Test
+    public void doublyLinkedListSentinelTest01() {
+        DoublyLinkedListSentinel integers = new DoublyLinkedListSentinel();
+        integers.addFirst(1);
+        integers.addFirst(2);
+        integers.addFirst(3);
+        integers.addFirst(4);
+        integers.addFirst(5);
+        Assertions.assertIterableEquals(List.of(5, 4, 3, 2, 1), integers);
+    }
+
+    @Test
+    public void doublyLinkedListSentinelTest02() {
+        DoublyLinkedListSentinel integers = new DoublyLinkedListSentinel();
+        integers.addLast(1);
+        integers.addLast(2);
+        integers.addLast(3);
+        integers.addLast(4);
+        integers.addLast(5);
+        Assertions.assertIterableEquals(List.of(1, 2, 3, 4, 5), integers);
+    }
+
+    @Test
+    public void factorialTest01() {
+        Factorial factorial = new Factorial();
+        factorial.reversePrint("Hello world");
+    }
+
+    @Test
+    public void factorialBubbleSortTest01() {
+        FactorialBubbleSort factorialBubbleSort = new FactorialBubbleSort();
+        int[] arr = Utils.getRandomArray(10000,true);
+        factorialBubbleSort.sort(arr);
+        System.out.println(Arrays.toString(arr));
     }
 }

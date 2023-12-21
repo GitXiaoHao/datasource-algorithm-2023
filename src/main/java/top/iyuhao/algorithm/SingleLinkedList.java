@@ -62,13 +62,14 @@ public class SingleLinkedList<T> implements Iterable<T> {
             addLast(e);
         } else if (index == 0) {
             addFirst(e);
-        }else {
+        } else {
             Node<T> p = findByIndex(index - 1);
             p.next = new Node<>(e, p.next);
             size++;
         }
     }
-    public void removeFirst(){
+
+    public void removeFirst() {
         if (head.next == null) {
             throw new NoSuchElementException();
         }
@@ -76,11 +77,41 @@ public class SingleLinkedList<T> implements Iterable<T> {
         size--;
     }
 
+    public void remove(int index) {
+        Objects.checkIndex(index, size);
+        if (index == 0) {
+            removeFirst();
+        } else {
+            Node<T> p = findByIndex(index - 1);
+            p.next = p.next.next;
+            size--;
+        }
+    }
+
     public void loop(Consumer<? super T> consumer) {
         Node<T> pointer = head;
         while ((pointer = pointer.next) != null) {
             consumer.accept(pointer.value);
         }
+    }
+
+    public void loop2(Consumer<? super T> before, Consumer<? super T> after) {
+        recursion(head.next, before, after);
+    }
+
+    /**
+     * 递归调用
+     *
+     * @param current
+     * @param before
+     */
+    private void recursion(Node<T> current, Consumer<? super T> before, Consumer<? super T> after) {
+        if (current == null) {
+            return;
+        }
+        before.accept(current.value);
+        recursion(current.next, before, after);
+        after.accept(current.value);
     }
 
     @Override
