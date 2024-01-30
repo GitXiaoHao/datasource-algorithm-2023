@@ -16,10 +16,50 @@ public class AvlTree<E> {
         root = doPut(root, key, value);
     }
 
-    private AVLNode<E> doPut(AVLNode<E> root, int key, E value) {
-        return null;
+    private AVLNode<E> doPut(AVLNode<E> node, int key, E value) {
+        if (node == null) {
+            return new AVLNode<>(value,key);
+        }
+        if (key == node.height) {
+            node.value = value;
+            return node;
+        }
+        if (node.height > key) {
+            node.left =  doPut(node.left,key,value);
+        }else {
+            node.right =  doPut(node.right,key,value);
+        }
+        return balance(node);
     }
-
+    public void remove(int key){
+        root = doRemove(root,key);
+    }
+    private AVLNode<E> doRemove(AVLNode<E> node,int key){
+        if (node == null) {
+            return null;
+        }
+        if (node.height < key) {
+            node.right = doRemove(node.right,key);
+        }else if(node.height > key){
+            node.left = doRemove(node.left,key);
+        }else {
+            if (node.left == null) {
+                node =  node.right;
+            }else if (node.right == null) {
+                node = node.left;
+            }else {
+                //找后继节点
+                AVLNode<E> right = node.right;
+                while (right.left != null) {
+                    right = right.left;
+                }
+                node.right = doRemove(node.right,right.height);
+                right.left = node.left;
+                node = right;
+            }
+        }
+        return balance(node);
+    }
     private int getHeight(AVLNode<E> node) {
         return node == null ? 0 : node.height;
     }
